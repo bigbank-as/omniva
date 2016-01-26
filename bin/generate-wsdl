@@ -27,6 +27,7 @@ $config    = new Config([
     'outputDir'                      => './src/Soap/Wsdl',
     'namespaceName'                  => 'Bigbank\Omniva\Soap\Wsdl',
     'sharedTypes'                    => true,
+    'proxy'                          => getenv('HTTPS_PROXY'),
     // 'soapClientClass' value must begin with a leading namespace class
     // otherwise the generated class uses a relative namespace which won't resolve
     'soapClientClass'                => '\Bigbank\Omniva\Soap\ProxyAwareClient',
