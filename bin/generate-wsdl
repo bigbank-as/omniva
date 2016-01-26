@@ -1,7 +1,15 @@
 #!/usr/bin/env php
 
 <?php
+/**
+ * Use [Wsdl2PhpGenerator](https://github.com/wsdl2phpgenerator/wsdl2phpgenerator) to generate PHP classes
+ * from Omniva SOAP service(s)
+ *
+ * The generated classes will be put under src/Soap/Wsdl.
+ * Run this program from the root directory of the project.
+ */
 
+use Bigbank\Omniva\Services\AddressSearch;
 use Wsdl2PhpGenerator\Config;
 use Wsdl2PhpGenerator\Generator;
 
@@ -9,13 +17,13 @@ require './vendor/autoload.php';
 
 echo sprintf(
     "Generating WSDL files from Omniva service (%s). " .
-    "This happens as part of the Composer post-update hook and requires an active internet connection.\n",
-    "https://otseturundus.post.ee/aadressid/ws/singleAddress2_5_1.wsdl"
+    "This requires an active internet connection.\n",
+    AddressSearch::PRODUCTION_API_URL
 );
 
 $generator = new Generator;
 $config    = new Config([
-    'inputFile'                      => "https://otseturundus.post.ee/aadressid/ws/singleAddress2_5_1.wsdl",
+    'inputFile'                      => AddressSearch::PRODUCTION_API_URL,
     'outputDir'                      => './src/Soap/Wsdl',
     'namespaceName'                  => 'Bigbank\Omniva\Soap\Wsdl',
     'sharedTypes'                    => true,

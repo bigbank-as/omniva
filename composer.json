@@ -1,31 +1,48 @@
 {
-  "name": "bigbank/omniva",
-  "description": "Library to interface with Omniva",
-  "license": "Apache-2.0",
-  "autoload": {
-    "psr-4": {
-      "Bigbank\\Omniva\\": "src/"
+    "name": "bigbank/omniva",
+    "type": "library",
+    "keywords": [
+        "bigbank",
+        "omniva",
+        "eesti post"
+    ],
+    "description": "Library to interface with Omniva web API-s",
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/bigbank-as/omniva",
+    "authors": [
+        {
+            "name": "Bigbank AS",
+            "homepage": "https://bigbank.eu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bigbank\\Omniva\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bigbank\\Omniva\\Test\\": "tests"
+        }
+    },
+    "require": {
+        "ext-xml": "*",
+        "ext-curl": "*",
+        "ext-soap": "*",
+        "ext-openssl": "*",
+        "php": ">=5.6",
+        "league/container": "~2.0"
+    },
+    "require-dev": {
+        "wsdl2phpgenerator/wsdl2phpgenerator": "~3"
+    },
+    "scripts": {
+        "post-update-cmd": "bin/wsdl_generator",
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     }
-  },
-  "require": {
-    "ext-xml": "*",
-    "ext-curl": "*",
-    "ext-soap": "*",
-    "ext-mbstring": "*",
-    "ext-openssl": "*",
-    "php": ">=5.6",
-    "league/container": "~2.0"
-  },
-  "require-dev": {
-    "wsdl2phpgenerator/wsdl2phpgenerator": "~3"
-  },
-  "scripts": {
-    "post-update-cmd": "bin/wsdl_generator",
-    "test": "phpunit"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0-dev"
-    }
-  }
 }

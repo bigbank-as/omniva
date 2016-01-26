@@ -45,8 +45,7 @@ class ProxyAwareClient extends \SoapClient implements SoapClientInterface
 
         $handle = curl_init();
 
-        $headers = ["Content-Type: text/xml", 'SOAPAction: "' . $action . '"'];
-
+        $headers = ['Content-Type: text/xml', 'SOAPAction: "' . $action . '"'];
         curl_setopt_array($handle, [
             CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_URL            => $url,

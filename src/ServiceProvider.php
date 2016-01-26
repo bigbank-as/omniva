@@ -3,11 +3,15 @@ namespace Bigbank\Omniva;
 
 use Bigbank\Omniva\Services\AddressSearch;
 use Bigbank\Omniva\Services\AddressSearchInterface;
-use Bigbank\Omniva\Soap\SoapClientInterface;
 use Bigbank\Omniva\Soap\Wsdl\SingleAddress2_5_1PortTypeService;
 use Bigbank\Omniva\Soap\Wsdl\SingleAddress2_5_1Request;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
+/**
+ * Default service provider for the DI container
+ *
+ * See [Service Providers](http://container.thephpleague.com/service-providers).
+ */
 class ServiceProvider extends AbstractServiceProvider
 {
 
@@ -17,21 +21,6 @@ class ServiceProvider extends AbstractServiceProvider
     protected $provides = [
         AddressSearchInterface::class
     ];
-
-    /**
-     * @var string
-     */
-    protected $apiUrl;
-
-    /**
-     * @var string
-     */
-    protected $apiPassword;
-
-    /**
-     * @var array
-     */
-    protected $options = [];
 
     /**
      * Use the register method to register items with the container via the
@@ -45,60 +34,43 @@ class ServiceProvider extends AbstractServiceProvider
 
         $container = $this->getContainer();
 
-        $container->add(SoapClientInterface::class, function () {
+        $container->add('omniva.address.search', function () {
 
-            $proxy = getenv('HTTP_PROXY') ?: null;
-
-            if ($proxy) {
-                $this->options['proxy_host'] = parse_url($proxy, PHP_URL_HOST);
-                $this->options['proxy_port'] = parse_url($proxy, PHP_URL_PORT);
-            }
-
-            return new SingleAddress2_5_1PortTypeService($this->options, $this->apiUrl);
+            return new SingleAddress2_5_1PortTypeService([
+                'proxy_host' => $this->getProxyHost(),
+                'proxy_port' => $this->getProxyPort()
+            ]);
         });
-
-        $container->add(
-            AddressSearchInterface::class,
-            AddressSearch::class
-        )->withArguments([
-            new SingleAddress2_5_1PortTypeService,
-            new SingleAddress2_5_1Request(null, null, null, null, $this->apiPassword)
-        ]);
+        $container->add(AddressSearchInterface::class, AddressSearch::class)
+            ->withArguments(['omniva.address.search', new SingleAddress2_5_1Request]);
     }
 
     /**
-     * @param string $apiUrl
+     * Get Proxy URL from the environment
      *
-     * @return $this
+     * @return string|false Proxy URL in the form of http(s)://host:port
      */
-    public function setApiUrl($apiUrl)
+    private function getProxyString()
     {
 
-        $this->apiUrl = $apiUrl;
-        return $this;
+        return getenv('HTTPS_PROXY') ?: getenv('HTTP_PROXY');
     }
 
     /**
-     * @param array $options
-     *
-     * @return $this
+     * @return string Proxy host name
      */
-    public function setOptions(array $options)
+    private function getProxyHost()
     {
 
-        $this->options = $options;
-        return $this;
+        return parse_url($this->getProxyString(), PHP_URL_HOST);
     }
 
     /**
-     * @param string $apiPassword
-     *
-     * @return $this
+     * @return int Proxy port
      */
-    public function setApiPassword($apiPassword)
+    private function getProxyPort()
     {
 
-        $this->apiPassword = $apiPassword;
-        return $this;
+        return parse_url($this->getProxyString(), PHP_URL_PORT);
     }
 }

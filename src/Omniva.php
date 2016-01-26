@@ -5,9 +5,9 @@ use League\Container\Container;
 use League\Container\ContainerInterface;
 
 /**
- *
+ * {@inheritdoc}
  */
-class Omniva
+class Omniva implements OmnivaInterface
 {
 
     /**
@@ -16,36 +16,22 @@ class Omniva
     protected $container;
 
     /**
-     * @param string $apiUrl
-     * @param string $apiPassword
-     * @param array  $options
+     * Setup dependency injection
      */
-    public function __construct($apiUrl, $apiPassword, array $options = [])
+    public function __construct()
     {
 
-        $this->container = $this->containerFactory($apiUrl, $apiPassword, $options);
+        $this->container = $this->containerFactory();
     }
 
     /**
-     * @param string $apiUrl
-     * @param string $apiPassword
-     * @param array  $options
-     *
      * @return Container
      */
-    private function containerFactory($apiUrl, $apiPassword, array $options = [])
+    private function containerFactory()
     {
 
         $container = new Container;
-
-        $systemServiceProvider = new ServiceProvider;
-        $systemServiceProvider->setApiUrl($apiUrl)
-            ->setApiPassword($apiPassword)
-            ->setOptions($options);
-
-        $container->addServiceProvider($systemServiceProvider);
-
-        return $container;
+        return $container->addServiceProvider(new ServiceProvider);
     }
 
     /**
