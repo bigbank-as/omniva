@@ -34,10 +34,11 @@
         "league/container": "~2.0"
     },
     "require-dev": {
-        "wsdl2phpgenerator/wsdl2phpgenerator": "~3"
+        "wsdl2phpgenerator/wsdl2phpgenerator": "~3",
+        "phpunit/phpunit": "~5"
     },
     "scripts": {
-        "post-update-cmd": "bin/wsdl_generator",
+        "post-update-cmd": "bin/generate-wsdl",
         "test": "phpunit"
     },
     "extra": {

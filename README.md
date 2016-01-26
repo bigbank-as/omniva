@@ -1,6 +1,6 @@
-# PHP Library for Omniva Services
+# PHP Library for Omniva API-s
 
-This is a PHP library for interfacing with [Omniva][link-omniva] (former Estonian Postal Service) web API-s.
+A PHP library for interfacing with [Omniva][link-omniva] (former Estonian Postal Service) web API-s without dealing with SOAP (too much).
 
 ## Install
 
@@ -10,7 +10,7 @@ Via Composer
 $ composer require bigbank/omniva
 ```
 
-The library requires PHP `>=5.6` and `curl`, `soap` and `openssl` extensions.
+The library requires PHP `>=5.6`, `curl`, `soap` and `openssl` extensions.
 
 ## Usage
 
@@ -18,7 +18,7 @@ The library requires PHP `>=5.6` and `curl`, `soap` and `openssl` extensions.
 // Instantiate the main class
 $omniva = new Omniva;
 
-// Ask for a service. Note that an API key needs to be set.
+// Ask for a service (see: Services). Note that an API key needs to be set.
 $addressSearchService = $omniva->getService(AddressSearchInterface::class)
     ->setApiKey(getenv('OMNIVA_PASSWORD'));
 
@@ -28,11 +28,20 @@ $addresses = $addressSearchService->findAddresses('Tartu mnt 18');
 print_r($addresses);
 ```
 
+There is an example implementation in [examples/search-address.php](examples/search-address.php). To test it out, run
+```bash
+OMNIVA_PASSWORD="<secret-string>" php examples/search-address.php
+```
+
 ## Services
 
 The library provides access to the following services:
 
-### AddressSearch (`AddressSearchInterface`)
+### Address Search
+
+- Interface name: `AddressSearchInterface`
+- Omniva service name: `ANDMETEENUSED AADRESSKOMPONENTIDE PÄRIMISE TEENUS 2 SISEND 5_1 (VERS.1)`
+- WSDL: [https://otseturundus.post.ee/aadressid/ws/singleAddress2_5_1.wsdl][address-search-wsdl]
 
 Get a list of physical addresses based on a partial input. Useful for applications like address auto-complete.
 
@@ -42,6 +51,15 @@ Get a list of physical addresses based on a partial input. Useful for applicatio
 $addressSearchService = $omniva->getService(AddressSearchInterface::class)
     ->setApiKey(getenv('OMNIVA_PASSWORD'))
     ->findAddresses('Tartu mnt 18');
+```
+
+You can change the URL of the Omniva API endpoint by manually instantiating `AddressSearch`:
+
+```php
+$addressSearchService = new AddressSearch(
+    new SingleAddress2_5_1PortTypeService($soapOptions, $wsdlUrl),
+    new SingleAddress2_5_1Request
+);
 ```
 #### Sample Output
 
@@ -89,9 +107,9 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 $ composer test
 ```
 
-## Contributing
+## Development
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Definitions
 
@@ -120,8 +138,9 @@ If you discover any security related issues, please email info@bigbank.ee instea
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The Apache 2.0 License (Apache-2.0). Please see [License File](LICENSE.md) for more information.
 
 [link-bb-developers]: https://github.com/orgs/bigbank-as/people
 [link-contributors]: ../../contributors
 [link-omniva]: https://www.omniva.ee
+[address-search-wsdl]: https://otseturundus.post.ee/aadressid/ws/singleAddress2_5_1.wsdl
