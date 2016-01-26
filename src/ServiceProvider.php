@@ -39,7 +39,7 @@ class ServiceProvider extends AbstractServiceProvider
             return new SingleAddress2_5_1PortTypeService([
                 'proxy_host' => $this->getProxyHost(),
                 'proxy_port' => $this->getProxyPort()
-            ]);
+            ], AddressSearch::PRODUCTION_API_URL);
         });
         $container->add(AddressSearchInterface::class, AddressSearch::class)
             ->withArguments(['omniva.address.search', new SingleAddress2_5_1Request]);
