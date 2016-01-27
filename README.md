@@ -1,5 +1,10 @@
 # PHP Library for Omniva API-s
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Total Downloads][ico-downloads]][link-downloads]
+
 A PHP library for interfacing with [Omniva][link-omniva] (former Estonian Postal Service) web API-s without dealing with SOAP (too much).
 
 ## Install
@@ -18,7 +23,7 @@ The library requires PHP `>=5.6`, `curl`, `soap` and `openssl` extensions.
 // Instantiate the main class
 $omniva = new Omniva;
 
-// Ask for a service (see: Services). Note that an API key needs to be set.
+// Ask for a service (see: Services)
 $addressSearchService = $omniva->getService(AddressSearchInterface::class)
     ->setApiKey(getenv('OMNIVA_PASSWORD'));
 
@@ -28,10 +33,12 @@ $addresses = $addressSearchService->findAddresses('Tartu mnt 18');
 print_r($addresses);
 ```
 
-There is an example implementation in [examples/search-address.php](examples/search-address.php). To test it out, run
+Example implementation in [examples/search-address.php](examples/search-address.php) can be run with
 ```bash
-OMNIVA_PASSWORD="<secret-string>" php examples/search-address.php
+$ OMNIVA_PASSWORD="<secret-string>" php examples/search-address.php
 ```
+
+To use a HTTP proxy, set `HTTP_PROXY` environment variable.
 
 ## Services
 
@@ -39,11 +46,11 @@ The library provides access to the following services:
 
 ### Address Search
 
+Get a list of physical addresses based on a partial input. Useful for applications like address auto-complete.
+
 - Interface name: `AddressSearchInterface`
 - Omniva service name: `ANDMETEENUSED AADRESSKOMPONENTIDE PÄRIMISE TEENUS 2 SISEND 5_1 (VERS.1)`
 - WSDL: [https://otseturundus.post.ee/aadressid/ws/singleAddress2_5_1.wsdl][address-search-wsdl]
-
-Get a list of physical addresses based on a partial input. Useful for applications like address auto-complete.
 
 #### Usage
 
@@ -144,3 +151,12 @@ The Apache 2.0 License (Apache-2.0). Please see [License File](LICENSE.md) for m
 [link-contributors]: ../../contributors
 [link-omniva]: https://www.omniva.ee
 [address-search-wsdl]: https://otseturundus.post.ee/aadressid/ws/singleAddress2_5_1.wsdl
+
+[ico-version]: https://img.shields.io/packagist/v/bigbank/omniva.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/bigbank/omniva/master.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/bigbank/omniva.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/bigbank/omniva
+[link-travis]: https://travis-ci.org/bigbank/omniva
+[link-downloads]: https://packagist.org/packages/bigbank/omniva

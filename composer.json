@@ -35,10 +35,11 @@
     },
     "require-dev": {
         "wsdl2phpgenerator/wsdl2phpgenerator": "~3",
-        "phpunit/phpunit": "~5"
+        "phpunit/phpunit": "~5",
+        "squizlabs/php_codesniffer": "~2.5",
+        "phpmd/phpmd" : "~2.3"
     },
     "scripts": {
-        "post-update-cmd": "bin/generate-wsdl",
         "test": "phpunit"
     },
     "extra": {

@@ -47,7 +47,7 @@ class AddressSearchTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             [
-                'address'                => 'Eesti Vabariik, Tartu maakond, Alatskivi vald, Alatskivi alevik, Tartu maantee 18a',
+                'address'                => 'Tartu maakond, Alatskivi vald, Alatskivi alevik, Tartu maantee 18a',
                 'addressNumber'          => '18a',
                 'county'                 => 'Tartu maakond',
                 'countyId'               => '0078',
@@ -105,7 +105,7 @@ class AddressSearchTest extends \PHPUnit_Framework_TestCase
             ->setKorterinumber(null)
             ->setSihtnumber('60201')
             ->setStaatus('Kontrollitud, kehtiv')
-            ->setAadress('Eesti Vabariik, Tartu maakond, Alatskivi vald, Alatskivi alevik, Tartu maantee 18a')
+            ->setAadress('Tartu maakond, Alatskivi vald, Alatskivi alevik, Tartu maantee 18a')
             ->setPohiaadress(null)
             ->setPostkastiTyyp(null)
             ->setNimekapiNr(null)

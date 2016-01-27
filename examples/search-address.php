@@ -9,6 +9,8 @@ use Bigbank\Omniva\Services\AddressSearchInterface;
 
 include './vendor/autoload.php';
 
+echo "Trying to search addresses from Omniva. Make sure you have set the OMNIVA_PASSWORD environment variable.\n";
+
 // Instantiate the main class
 $omniva = new Omniva;
 
