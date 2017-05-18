@@ -1,6 +1,7 @@
 <?php
 namespace Bigbank\Omniva\Services;
 
+use Bigbank\Omniva\Exceptions\OmnivaException;
 use Bigbank\Omniva\Soap\Wsdl\aadressKomponentKoordsType;
 use Bigbank\Omniva\Soap\Wsdl\SingleAddress2_5_1PortTypeService;
 use Bigbank\Omniva\Soap\Wsdl\SingleAddress2_5_1Request;
@@ -57,8 +58,17 @@ class AddressSearch implements AddressSearchInterface
 
         $this->omnivaRequest->setAadress($partialAddress);
         $response  = $this->omnivaService->SingleAddress2_5_1($this->omnivaRequest);
-        $addresses = $response->getAadressKomponentNimekiriKoords()->getAadressKomponent();
-        return $this->formatResponseAddresses($addresses);
+        $responseContent = $response->getVastus();
+
+        if ($responseContent === 'AADRESS_PUUDUB')
+        {
+
+            return [];
+        } else {
+
+            $addresses = $response->getAadressKomponentNimekiriKoords()->getAadressKomponent();
+            return $this->formatResponseAddresses($addresses);
+        }
     }
 
     /**
