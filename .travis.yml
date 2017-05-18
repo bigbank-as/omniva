@@ -14,7 +14,7 @@ script:
   - php -l tests
 
   # Run unit tests
-  - phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
   # Check for coding standard violations
   - vendor/bin/phpcs --standard=PSR2 --ignore=Wsdl src tests

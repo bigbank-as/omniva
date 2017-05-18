@@ -79,6 +79,39 @@ class AddressSearchTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::findAddresses no addresses found
+     */
+    public function testFindAddressesReturnsEmptyArray()
+    {
+
+        // Create SOAP request and response DTO-s
+        $request  = new SingleAddress2_5_1Request;
+        $response = new SingleAddress2_5_1ResponseType(
+            new aadressKomponentNimekiriKoordsType([])
+        );
+
+        // Mock the SOAP service class to return the response DTO
+        /** @var SingleAddress2_5_1PortTypeService|\PHPUnit_Framework_MockObject_MockObject $mockSoapService */
+        $mockSoapService = $this->getMockBuilder(SingleAddress2_5_1PortTypeService::class)
+            ->setMethods(['SingleAddress2_5_1'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockSoapService->expects($this->once())
+            ->method('SingleAddress2_5_1')
+            ->with($this->callback(function (SingleAddress2_5_1Request $request) {
+
+                return $request->getAadress() === 'TartuPoleOlemas';
+            }))
+            ->willReturn($response);
+
+        $addressSearch = new AddressSearch($mockSoapService, $request);
+
+        $addresses = $addressSearch->findAddresses('TartuPoleOlemas');
+
+        $this->assertSame([], $addresses);
+    }
+
+    /**
      * @return aadressKomponentKoordsType
      */
     protected function createTestAddress()
