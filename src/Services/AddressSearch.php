@@ -59,12 +59,9 @@ class AddressSearch implements AddressSearchInterface
         $response  = $this->omnivaService->SingleAddress2_5_1($this->omnivaRequest);
         $responseContent = $response->getVastus();
 
-        if ($responseContent === 'AADRESS_PUUDUB')
-        {
-
+        if ($responseContent === 'AADRESS_PUUDUB') {
             return [];
         } else {
-
             $addresses = $response->getAadressKomponentNimekiriKoords()->getAadressKomponent();
             return $this->formatResponseAddresses($addresses);
         }
