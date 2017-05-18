@@ -1,7 +1,6 @@
 <?php
 namespace Bigbank\Omniva\Services;
 
-use Bigbank\Omniva\Exceptions\OmnivaException;
 use Bigbank\Omniva\Soap\Wsdl\aadressKomponentKoordsType;
 use Bigbank\Omniva\Soap\Wsdl\SingleAddress2_5_1PortTypeService;
 use Bigbank\Omniva\Soap\Wsdl\SingleAddress2_5_1Request;
