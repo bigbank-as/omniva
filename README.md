@@ -1,9 +1,9 @@
 # PHP Library for Omniva API-s
 
-[![Latest Stable Version on Packagist][ico-version]](link-packagist)
+[![Latest Stable Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
-[![Total Downloads][ico-downloads]](link-downloads)
+[![Total Downloads][ico-downloads]][link-downloads]
 
 A PHP library for interfacing with [Omniva][link-omniva] (former Estonian Postal Service) web API-s without dealing with SOAP (too much).
 
@@ -158,5 +158,5 @@ The Apache 2.0 License (Apache-2.0). Please see [License File](LICENSE.md) for m
 [ico-downloads]: https://poser.pugx.org/bigbank/omniva/downloads
 
 [link-packagist]: https://packagist.org/packages/bigbank/omniva
-[link-travis]: https://travis-ci.org/bigbank/omniva
+[link-travis]: https://travis-ci.org/bigbank-as/omniva
 [link-downloads]: https://packagist.org/packages/bigbank/omniva
